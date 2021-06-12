@@ -7,7 +7,7 @@ h1 {
 
 #bookList {
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-auto-rows: 50px;
     grid-template-columns: 1fr;
 }
 
@@ -42,9 +42,17 @@ h1 {
     }
 }
 
+@keyframes turnBlack {
+    100% {
+        background-color: black;
+    }
+}
+
 #sample {
     border-top: solid;
     border-bottom: solid;
+    padding-top: 8px;
+    padding-bottom: 8px
 }
 
 .indivBook {
@@ -54,8 +62,7 @@ h1 {
     font-size: 20px;
     width: 100%;
     border-bottom: dashed;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    align-content: center;
 }
 
 .deleteButton {
@@ -63,7 +70,6 @@ h1 {
     border: 2px solid red;
     background-color: white;
     color: red;
-    height: 100%;
     width: 100px;
     border-radius: 5px;
 }
@@ -73,6 +79,7 @@ h1 {
     animation-duration: 500ms;
     animation-fill-mode: forwards;
     color: white;
+    cursor: pointer;
 }
 
 .statusButton {
@@ -80,7 +87,14 @@ h1 {
     border: 2px solid rgb(0, 0, 0);
     background-color: white;
     color: rgb(0, 0, 0);
-    height: 100%;
-    width: 100px;
     border-radius: 5px;
+    width: 100px;
+}
+
+.statusButton:hover {
+    animation-name: turnBlack;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    cursor: pointer;
+    color: white;
 }
