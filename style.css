@@ -1,0 +1,76 @@
+button{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}body{line-height:1;color:black;background:white;}:focus{outline:0;}table{border-collapse:collapse;border-spacing:0;}caption,th,td{text-align:left;font-weight:normal;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}ol,ul{list-style:none;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}blockquote:before,blockquote:after,q:before,q:after{content:"";}blockquote,q{quotes:"" "";}abbr,acronym{border:0;}
+
+h1 {
+    font-family: monospace;
+    font-size: 50px;
+}
+
+#bookList {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 1fr;
+}
+
+#addBook {
+    font-family: monospace;
+    position: fixed;
+    bottom: 0px;
+    width: 60%;
+    height: 60px;
+    font-size: 15px;
+    margin-bottom: 50px;
+    border: solid;
+    border-radius: 10px;
+    border-color:rgb(27, 214, 27);
+}
+
+#addBook:hover {
+    animation-name: turnGreen;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes turnGreen {
+    100% {
+        background-color: rgb(27, 214, 27);
+    }
+}
+
+@keyframes turnRed {
+    100% {
+        background-color: red;
+    }
+}
+
+#sample {
+    border-top: solid;
+    border-bottom: solid;
+}
+
+.indivBook {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-family: monospace;
+    font-size: 20px;
+    width: 100%;
+    border-bottom: dashed;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.deleteButton {
+    font-size: 15px;
+    border: 2px solid red;
+    background-color: white;
+    color: red;
+    height: 100%;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.deleteButton:hover {
+    animation-name: turnRed;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    color: white;
+}
