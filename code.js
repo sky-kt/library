@@ -2,7 +2,6 @@ let myLibrary = [];
 
 let bookList = document.getElementById("bookList")
 let addBook = document.getElementById("addBook")
-let deleteButton = document.getElementsByClassName("deleteButton")
 
 addBook.addEventListener("click", getBookInfo);
 
@@ -11,32 +10,43 @@ function deleteBook(delNum) {
     updateLibrary()
 }
 
+function changeStatus(index) {
+    if(myLibrary[index].readStatus === 'yes') {
+        myLibrary[index].readStatus = 'no'
+        console.log(myLibrary[index].readStatus)
+    } else myLibrary[index].readStatus = 'yes'
+    updateLibrary()
+}
+
 
 function getBookInfo() {
     let author = prompt("Author?")
     let title = prompt("Title?")
     let pageNumbers = prompt("Amount of pages?")
-    let hasBeenRead = prompt("Has it been read?")
-    let newBook = new Book(author, title, pageNumbers, hasBeenRead)
+    let readStatus
+    do {
+        readStatus = prompt("Has it been read?\nAnswer with yes or no.")
+    } while (readStatus != 'yes' && readStatus != 'no');
+    let newBook = new Book(author, title, pageNumbers, readStatus)
     myLibrary.push(newBook)
-    console.log(newBook)
     updateLibrary()
+    console.log(myLibrary)
 }
 
-function Book(author, title, pageNumbers, hasBeenRead) {
+function Book(author, title, pageNumbers, readStatus) {
     this.author = author
     this.title = title
     this.pageNumbers = pageNumbers
-    this.hasBeenRead = hasBeenRead
+    this.readStatus = readStatus
 }
 
 function updateLibrary() {
-    let deleteButtonCounter = 0
+    let buttonCounter = 0
     bookList.textContent = '';
     for(let book in myLibrary) {
         let bookCharacteristics = Object.values(myLibrary[book])
         let newBook = document.createElement("div")
-        for(characteristic in bookCharacteristics) {
+        for(let characteristic = 0; characteristic < bookCharacteristics.length - 1; characteristic++) {
             let trait = document.createElement("div")
             let traitText = document.createTextNode(bookCharacteristics[characteristic])
             trait.appendChild(traitText)
@@ -44,11 +54,30 @@ function updateLibrary() {
         }
         newBook.className = "indivBook"
         let deleteButton = makeDeleteButton()
-        deleteButton.id = `del${deleteButtonCounter++}`
+        let statusButton = makeStatusButton(myLibrary[book].readStatus)
+
+        statusButton.id = `status${buttonCounter}`
+        deleteButton.id = `del${buttonCounter}`
+        buttonCounter++
+        
+        newBook.appendChild(statusButton)
         newBook.appendChild(deleteButton)        
+
         bookList.appendChild(newBook)
     }
-    activiateDeleteButton()
+    activateButtons()
+}
+
+
+function makeStatusButton(currentStatus) {
+    let statusButton = document.createElement("button")
+    let statusButtonText 
+    if(currentStatus === "yes") {
+        statusButtonText = document.createTextNode("yes")
+    } else statusButtonText = document.createTextNode("no")
+    statusButton.appendChild(statusButtonText)
+    statusButton.className = "statusButton"
+    return statusButton
 }
 
 function makeDeleteButton() {
@@ -59,11 +88,15 @@ function makeDeleteButton() {
     return deleteButton
 }
 
-function activiateDeleteButton() {
+function activateButtons() {
     document.querySelectorAll('.deleteButton').forEach(item => {
         item.addEventListener('click', event => {
-            console.log(item.id)
             deleteBook(item.id.replace('del', ''))
+        })
+    })
+    document.querySelectorAll('.statusButton').forEach(item => {
+        item.addEventListener('click', event => {
+            changeStatus(item.id.replace('status', ''))
         })
     })
 }
