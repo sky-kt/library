@@ -11,25 +11,49 @@ h1 {
     grid-template-columns: 1fr;
 }
 
-#addBook {
+#newContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
     font-family: monospace;
+}
+
+#newBookButton {
     position: fixed;
-    bottom: 0px;
+    bottom: 50px;
     width: 60%;
     height: 60px;
     font-size: 15px;
-    margin-bottom: 50px;
     border: solid;
     border-radius: 10px;
     border-color:rgb(27, 214, 27);
 }
 
-#addBook:hover {
+#newBookButton:hover {
     animation-name: turnGreen;
     animation-duration: 500ms;
     animation-fill-mode: forwards;
 }
 
+#newBookForm {
+    position: fixed;
+    bottom: 50px;
+    width: 60%;
+    height: 60px;
+    font-size: 15px;
+    border: solid;
+    border-radius: 10px;
+    border-color:rgb(27, 214, 27);
+    box-sizing: border-box;
+}
+
+#newBookInput {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+}
 @keyframes turnGreen {
     100% {
         background-color: rgb(27, 214, 27);

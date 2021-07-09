@@ -1,9 +1,9 @@
 // eslint-disable-next-line prefer-const
 let myLibrary = []
 const bookList = document.getElementById('bookList')
-const addBook = document.getElementById('addBook')
-
-addBook.addEventListener('click', getBookInfo)
+// const newBookButton = document.getElementById('newBookButton')
+const newContainer = document.getElementById('newContainer')
+// newBookButton.addEventListener('click', getBookInfo)
 
 function deleteBook (delNum) {
   myLibrary.splice(delNum, 1)
@@ -15,19 +15,6 @@ function changeStatus (index) {
     myLibrary[index].readStatus = 'no'
     console.log(myLibrary[index].readStatus)
   } else myLibrary[index].readStatus = 'yes'
-  updateLibrary()
-}
-
-function getBookInfo () {
-  const author = prompt('Author?')
-  const title = prompt('Title?')
-  const pageNumbers = prompt('Amount of pages?')
-  let readStatus
-  do {
-    readStatus = prompt('Has it been read?\nAnswer with yes or no.')
-  } while (readStatus !== 'yes' && readStatus !== 'no')
-  const newBook = new Book(author, title, pageNumbers, readStatus)
-  myLibrary.push(newBook)
   updateLibrary()
 }
 
@@ -95,5 +82,83 @@ function activateButtons () {
     item.addEventListener('click', event => {
       changeStatus(item.id.replace('status', ''))
     })
+  })
+}
+
+function makeBookButton () {
+  while (newContainer.lastElementChild) {
+    newContainer.removeChild(newContainer.lastElementChild)
+  }
+  const newBookButton = document.createElement('button')
+  newBookButton.setAttribute('id', 'newBookButton')
+  newBookButton.appendChild(document.createTextNode('Add Book'))
+  newBookButton.type = 'button'
+  newContainer.appendChild(newBookButton)
+  newBookButton.addEventListener('click', makeBookForm)
+}
+makeBookButton()
+
+function makeBookForm () {
+  while (newContainer.lastElementChild) {
+    newContainer.removeChild(newContainer.lastElementChild)
+  }
+
+  const newBookForm = document.createElement('form')
+  newBookForm.setAttribute('id', 'newBookForm')
+  newBookForm.setAttribute('id', 'newBookForm')
+  newBookForm.type = 'text'
+
+  const newBookInput = document.createElement('input')
+  newBookInput.setAttribute('id', 'newBookInput')
+  newBookForm.appendChild(newBookInput)
+  newContainer.appendChild(newBookForm)
+
+  let placeholderIdx = 0
+  function changePlaceholder () {
+    switch (placeholderIdx) {
+      case 0:
+        newBookInput.placeholder = 'Title'
+        newBookInput.required = true
+        break
+      case 1:
+        newBookInput.placeholder = 'Author'
+        newBookInput.required = true
+        break
+      case 2:
+        newBookInput.placeholder = 'Pages'
+        newBookInput.required = true
+        newBookInput.type = 'number'
+        newBookInput.min = 1
+        newBookInput.max = 10000
+        break
+      case 3:
+        newBookInput.placeholder = 'Done? (yes/no)'
+        newBookInput.required = true
+        newBookInput.type = 'text'
+        newBookInput.pattern = '[Yy]es|[Nn]o'
+        break
+    }
+    placeholderIdx++
+  }
+  changePlaceholder()
+  newBookInput.focus()
+
+  // eslint-disable-next-line prefer-const
+  let finalBook = []
+
+  newBookForm.addEventListener('submit', () => {
+    finalBook.push(newBookInput.value)
+    console.log(finalBook)
+    changePlaceholder()
+    newBookInput.value = ''
+    newBookInput.focus()
+    event.preventDefault()
+
+    if (finalBook.length === 4) {
+      const newBook = new Book(finalBook[0], finalBook[1], finalBook[2], finalBook[3])
+      myLibrary.push(newBook)
+      updateLibrary()
+      makeBookButton()
+    }
   })
 }
